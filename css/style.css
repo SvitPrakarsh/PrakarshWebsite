@@ -1,0 +1,181 @@
+@font-face {
+    font-family: 'Myriad Pro';
+    src: url('fonts/MYRIADPRO-REGULAR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    background: #CCC;
+    font-family: 'Myriad Pro';
+}
+
+header {
+    width: 100%;
+    height: 67px;
+    position: fixed;
+    top: -60px;
+    opacity: 0;
+}
+
+.social {
+    float: right; 
+    margin: 1rem; 
+    padding: 0 1rem; 
+    background-color: white; 
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.social a {
+    font-size: 2.5em; 
+    padding-right: 1rem;
+    text-decoration: none;
+}
+
+.fa-instagram {
+    color:#DD2A7B;
+}
+
+span {
+/*     position: fixed; */
+    top: 100px;
+}
+
+section {
+    height: 100vh;
+}
+
+.event img {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+.event{
+    text-decoration:none;
+}
+.im-size {
+    width: 22%;
+    height: 77px;
+}
+
+.app-promo{
+     width:66%;
+     height:auto;
+}
+@media (max-width: 600px) {
+  .im-size{
+    width: 45%;
+    height: 65px;
+  }
+  .app-promo{
+     width:100%;
+     height:auto;
+     padding-right:12px;
+    }
+}
+
+
+/*
+section:nth-child(1) {
+  background: lightblue;
+}
+section:nth-child(2) {
+  background: lightgreen;
+}
+section:nth-child(3) {
+  background: purple;
+}
+section:nth-child(4) {
+  background: red;
+}
+section:nth-child(5) {
+  background: yellow;
+}
+*/
+
+.padding {
+    padding: 2rem;
+}
+
+.padding-top {
+    padding-top: 3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.slide1 {
+    background-image: url('../assets/govind_dholakia.png');
+}
+.slide2 {
+    background-image: url('../assets/gyanvatsal_swami.png');
+}
+.slide3 {
+    background-image: url('../assets/nilesh_desai.png');
+}
+.slide4 {
+    background-image: url('../assets/pradeep_ahirkar.png');
+}
+
+@media (max-width: 600px) {
+    .slide1 {
+        background-image: url('../assets/gd.png');
+    }
+    .slide2 {
+        background-image: url('../assets/gs.png');
+    }
+    .slide3 {
+        background-image: url('../assets/nd.png');
+    }
+    .slide4 {
+        background-image: url('../assets/pa.png');
+    }
+}
+
+
+/* For Events */
+
+.event-menu {
+    display: flex;
+    flex-wrap: wrap;
+    /* Compensate for excess margin on outer gallery flex items */
+    margin: -1rem -1rem;
+}
+
+.event-item {
+    /* Minimum width of 24rem and grow to fit available space */
+    flex: 1 0 40rem;
+    /* Margin value should be half of grid-gap value as margins on flex items don't collapse */
+    margin: 1rem;
+    box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    height: 75%;
+}
+
+.event-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms ease-out;
+}
+
+.event-image:hover {
+    transform: scale(1.15);
+}
+
+@supports (display: grid) {
+    .event-menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+        grid-gap: 1rem;
+    }
+    .event-menu,
+    .event-item {
+        margin: 10px 10px;
+    }
+}

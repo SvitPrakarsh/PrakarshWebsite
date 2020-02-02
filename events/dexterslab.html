@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dexter's Lab - Prakarsh XV</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="../assets/favicon.ico">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
+
+<div class="container" ng-class="{'no-scroll': selected.length}" ng-app="app" ng-controller="mainCtrl">
+    <div class="page">
+        <div class="grid">
+            <div class="grid-item" ng-repeat="item in boxes">
+                <box class="box" item="item" on-select="selectBox" ng-class="{'selected': selected[0].item.name == item.name}"></box>
+            </div>
+        </div>
+    </div>
+    <div class="fullscreen-background top-up" ng-show="selected.length" ng-style="{'background-color': '' + selected[0].item.color + ''}"></div>
+    <div class="scroller" ng-show="selected.length">
+        <a class="close-button" ng-click="clearSelection()">
+            <i class="material-icons">close</i>
+        </a>
+        <h1>{{selected[0].item.name}}</h1>
+        <div big-box ng-repeat="item in selected" class="box on-top" position="item.position" selected="item.item">
+            <img ng-src="{{item.item.imageUrl}}" alt="" />
+            <div class="content">
+                <!-- <h2>{{item.item.name}}</h2> -->
+                <h3 class="tagline">{{item.item.tagline}}</h3>
+                 <p id="yo"></p> 
+                <script>
+                    $(document).ready(function(){
+                        var link = angular.element(document.getElementById('yo')).scope().item.item.dataUrl;
+                        $.getJSON(link, function (jd) {
+                            // $('#event_name').html(jd.eventName);
+                            $.each(jd.details, function (index, value) {
+                                $('#details').append('<span class="sectionHead">'+ value.sectionHeader+ '<br>'+ '</span>' + value.sectionContent + '<br/><br/><br/>');
+                            });
+                            $.each(jd.contactDetails, function (index, value) {
+                                $('#contact1').append(value.name + ' : ' + value.number + '<br/>');
+                            });
+                            $('#contact1').append('</span>')
+                        });
+                    });
+                </script>
+               <!-- <h2 id="event_name">
+                        Contact details
+                        <span id="contact1"></span>
+                </h2> -->
+
+                <div class="tab-content" id="details">
+                        <br />
+                </div>
+                <span class="contactDetails">Contact Details</span><br>
+                <span id = "contact1"></span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- partial -->
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-animate.min.js'></script>
+<script  src="./dexterslab.js"></script>
+</body>
+</html>

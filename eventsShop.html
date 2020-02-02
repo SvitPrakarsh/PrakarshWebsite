@@ -1,0 +1,368 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        Prakarsh XV Events Shop
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <style>
+        .noselect {
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Old versions of Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+        }
+
+        #myrow {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #FFFFFF;
+        }
+
+
+        .myinputstyle {
+            border-radius: 25px;
+            padding: 5px;
+            padding-left: 10px;
+            outline: none;
+            border: 2px solid #73AD21;
+        }
+
+        #mycol {
+            display: block;
+            color: black;
+            text-align: center;
+            outline: none;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        #mycol div:hover:not(.active) {
+            background-color: #FFFFFF;
+
+        }
+
+        #mycontainer {
+
+            height: 70%;
+
+
+        }
+
+        .mybutton {
+            border-radius: 25px;
+            border: 2px solid #73AD21;
+            background-color: #73AD21;
+            color: white;
+            margin-top: 5px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            outline: none;
+            padding: 10px;
+
+        }
+
+        .myadd {
+            border-radius: 15px;
+            border: 2px solid #73AD21;
+            background-color: #73AD21;
+            color: white;
+            outline: none;
+            padding: 5px;
+
+        }
+
+
+
+        .rcorner {
+            overflow: auto;
+            margin: 6px;
+            margin-top: 15px;
+            border-radius: 25px;
+            border: 2px solid #73AD21;
+            padding: 20px;
+            flex-wrap: wrap;
+
+        }
+
+        .active {
+            border-bottom: 2px solid green;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+    <script>
+        var orders = {};
+        var tech = {};
+        var nontech = {};
+        var technontech = {};
+        var workshop = {};
+        var total = 0;
+
+        function mydatfunc(data) {
+
+            (Object.keys(data)).forEach(function (item) {
+                var type = data[item][2];
+                var temp = data[item];
+                temp.pop();
+                console.log(temp);
+                if (type == 0) {
+                    tech[item] = temp;
+                } else if (type == 1) {
+                    nontech[item] = temp;
+                } else if (type == 2) {
+                    technontech[item] = temp;
+
+                } else if (type == 3) {
+                    workshop[item] = temp;
+                }
+            });
+
+        }
+
+        function addItem(key, id) {
+
+            if (id == 0) {
+
+                orders[key] = tech[key];
+
+                delete tech[key];
+            } else if (id == 1) {
+
+                orders[key] = nontech[key];
+                delete nontech[key];
+            } else if (id == 2) {
+
+                orders[key] = technontech[key];
+                delete technontech[key];
+            } else if (id == 3) {
+
+                orders[key] = workshop[key];
+                delete workshop[key];
+            }
+
+            orders[key].push(id);
+            total = total + Number(orders[key][1]);
+            makeDivBody();
+            makeOrderBody();
+        }
+        function removeItem(key) {
+            var id = orders[key][2];
+            var price = orders[key][1];
+            total = total - Number(price);
+            orders[key].pop();
+            if (id == 0) {
+                tech[key] = orders[key];
+            } else if (id == 1) {
+                nontech[key] = orders[key];
+            } else if (id == 2) {
+                technontech[key] = orders[key];
+            } else if (id == 3) {
+                workshop[key] = orders[key];
+            }
+            delete orders[key];
+            makeDivBody();
+            makeOrderBody();
+
+        }
+
+        function makeOrderBody() {
+            var body = "";
+            (Object.keys(orders)).forEach(function (item) {
+                var key = item;
+                var name = orders[key][0];
+                var price = orders[key][1];
+                body += "<div id='" + key + "' class='row' style='margin: 5px;'><div class='col' style=' margin: auto;'>" + name + "</div><div class='col' style=' margin: auto;'>" + price + " rs</div><button  class='myadd' style='margin: auto;' onClick='removeItem(\"" + key + "\")'>REMOVE</button></div>";
+
+            });
+            body += "<p class='text-right' style='margin: 15px;'><b>Subtotal = " + total + " rs</b></p>";
+            $("#ordersDiv").html(body);
+        }
+
+        function makeDivBody() {
+            var body0 = "";
+            var body1 = "";
+            var body2 = "";
+            var body3 = "";
+
+            (Object.keys(tech)).forEach(function (item) {
+                var key = item;
+                var name = tech[key][0];
+                var price = tech[key][1];
+                body0 += "<div id='" + key + "' class='row' style='margin: 5px;'><div class='col' style=' margin: auto;'>" + name + "</div><div class='col' style=' margin: auto;'>" + price + " rs</div><button  class='myadd' style='margin: auto;' onClick='addItem(\"" + key + "\",0)'>ADD</button></div>";
+
+            });
+            (Object.keys(nontech)).forEach(function (item) {
+                var key = item;
+                var name = nontech[key][0];
+                var price = nontech[key][1];
+                body1 += "<div id='" + key + "' class='row' style='margin: 5px;'><div class='col' style=' margin: auto;'>" + name + "</div><div class='col' style=' margin: auto;'>" + price + " rs</div><button  class='myadd' style='margin: auto;' onClick='addItem(\"" + key + "\",1)'>ADD</button></div>";
+
+            });
+            (Object.keys(technontech)).forEach(function (item) {
+                var key = item;
+                var name = technontech[key][0];
+                var price = technontech[key][1];
+                body2 += "<div id='" + key + "' class='row' style='margin: 5px;'><div class='col' style=' margin: auto;'>" + name + "</div><div class='col' style=' margin: auto;'>" + price + " rs</div><button  class='myadd' style='margin: auto;' onClick='addItem(\"" + key + "\",2)'>ADD</button></div>";
+
+            });
+            (Object.keys(workshop)).forEach(function (item) {
+                var key = item;
+                var name = workshop[key][0];
+                var price = workshop[key][1];
+                body3 += "<div id='" + key + "' class='row' style='margin: 5px;'><div class='col' style=' margin: auto;'>" + name + "</div><div class='col' style=' margin: auto;'>" + price + " rs</div><button  class='myadd' style='margin: auto;' onClick='addItem(\"" + key + "\",3)'>ADD</button></div>";
+
+            });
+            console.log(body0)
+            $("#0x").html(body0);
+            $("#1x").html(body1);
+            $("#2x").html(body2);
+            $("#3x").html(body3);
+        }
+
+        function checkout() {
+            var phnum = $('#phNum').val();
+            var eMAil = $('#eMAil').val();
+            if (phnum != "" && phnum != undefined && eMAil != "" && eMAil != undefined) {
+
+                var output = "";
+                output += '<form method="post" action="https://us-central1-prakarshweb.cloudfunctions.net/app/api/payment_checkout" name="checkout_form">';
+                output += ' <input type="hidden" name="userid" value="' + phnum + '">';
+                output += ' <input type="hidden" name="email" value="' + eMAil + '">';
+                (Object.keys(orders)).forEach(function (item) {
+                    output += '<input type="hidden" name="events[]" value="' + item + '">';
+                });
+                output += '</form>';
+                $("#hiddenCheckout").html(output);
+                document.checkout_form.submit();
+
+            } else {
+                if (phnum == "" || phnum === undefined) {
+                    alert("Phonenumber required!");
+                } else if (eMAil == "" || eMAil === undefined) {
+                    alert("Email required!");
+                } else {
+                    alert("Phonenumber and Email required");
+                }
+            }
+        }
+
+
+
+        $(document).ready(function () {
+            console.log("ready!");
+            $("#1x").hide();
+            $("#2x").hide();
+            $("#3x").hide();
+            makeDivBody();
+
+        });
+
+
+
+        var last = "#0";
+        function manger(i) {
+            $(last + "x").hide();
+            $(last).removeClass('active');
+            last = "#" + i;
+            $(last).addClass('active');
+            $(last + "x").show();
+        }
+    </script>
+    <script src='https://us-central1-prakarshweb.cloudfunctions.net/app/api/events'>
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="myrow" class="row">
+            <div id="mycol" class="col noselect" onClick="manger(0);">
+                <div id="0" class="active">
+                    Tech
+                </div>
+            </div>
+            <div id="mycol" class="col noselect" onClick="manger(1);">
+                <div id="1">
+                    Non-Tech
+                </div>
+            </div>
+            <div id="mycol" class="col noselect" onClick="manger(2);">
+                <div id="2">
+                    Tech+Non-Tech
+                </div>
+            </div>
+            <div id="mycol" class="col noselect" onClick="manger(3);">
+                <div id="3">
+                    Workshop
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col" style="margin-left: 20px;">
+                <div class="row">
+                    <input type="tel" id="phNum" class="myinputstyle" placeholder="Phone Number:" />
+                </div>
+                <div class="row" style="margin-top: 4px;">
+                    <input class="myinputstyle" id="eMAil" type="email" placeholder="Email:" />
+                </div>
+                <div class="row">
+                    Make sure you enter correct email and phonenumber. Because you will recive event entry pass on email
+                    and important instructions on your phonenumber.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="mycontainer" class="container">
+        <div class="row flex-grow-1">
+            <div class="col-md rcorner flex-grow-1">
+                <div id="0x">
+
+                </div>
+                <div id="1x">
+
+                </div>
+                <div id="2x">
+
+                </div>
+                <div id="3x">
+
+                </div>
+            </div>
+            <div class="col-md rcorner flex-grow-1">
+                <div id="ordersDiv"></div>
+            </div>
+        </div>
+        <div class="row float-right flex-grow-1">
+
+            <button class="mybutton" onClick="checkout()">Checkout</button>
+
+        </div>
+    </div>
+    <div id="hiddenCheckout"></div>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'moon_getheavy';
+    src: url('./fonts/moon_get-heavy-webfont.woff2') format('woff2'),
+         url('./fonts/moon_get-heavy-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+#clockdiv {
+    text-align: center;
+    font-family: 'moon_getheavy';
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    font-size: 100px;
+    width: 100%;
+}
+
+#clockdiv>div {
+    padding: 10px;
+    display: inline-block;
+}
+
+#clockdiv div>span {
+    padding: 15px;
+    display: inline-block;
+    font-family: 'moon_getheavy';
+}
+
+.smalltext {
+    padding-top: 5px;
+    font-size: 16px;
+    font-family: 'Raleway';
+}
+
+@media (max-width: 640px) {
+    #clockdiv {
+        text-align: center;
+        width: 45%;
+        height: 65px;
+        display: inline;
+        font-size: 20px;
+    }
+    #clockdiv>div {
+        padding: 8px;
+        display: inline-block;
+    }
+}
